@@ -154,7 +154,8 @@ const T = {
   limits:'Harcama limiti',limitV:'2.000 EUR / ay',virtual:'Sanal kart',holder:'Hesap sahibi',bic:'BIC / SWIFT',copy:'Kopyala',copied:'Kopyalandı',
   detailsNote:'Bu hesap bilgileriyle başkaları sana para gönderebilir (demo — gerçek hesap değil).',expires:'Son kullanma',cardNote:'Kartla 40+ para biriminde düşük ücretle harca (demo).',
   support:'Canlı destek',online:'Çevrimiçi · genelde 1 dk içinde yanıt',typeMsg:'Mesajını yaz…',typing:'Yazıyor…',bot:'PayLite Asistan',agent:'Destek ekibi (demo)',greet:'Merhaba Ali! 👋 Ben PayLite asistanı. Sana nasıl yardımcı olabilirim?',q1:'Transfer ne kadar sürer?',q2:'Ücretler',q3:'Kartımı kaybettim',q4:'Temsilciye bağlan',a1:'Çoğu transfer saniyeler içinde ulaşır. Bazı banka transferleri 1 iş gününe kadar sürebilir.',a2:'Ücret %0,45 + küçük sabit bir tutar. Kuru piyasa ortası kurdan veriyoruz, gizli fark yok. Gönder ekranında tam dökümü görebilirsin.',a3:'Hemen Kart sekmesinden kartını dondurabilirsin ❄️ Yeni kart için bir temsilci sana yardımcı olacak.',a4:'Seni bir temsilciye bağlıyorum…',agentHi:'Merhaba, destek ekibinden yazıyorum. Talebini aldım, nasıl yardımcı olabilirim? (Bu bir demo yanıttır.)',fallback:'Anladım. Daha iyi yardımcı olabilmem için seni bir temsilciye aktarayım mı? "Temsilciye bağlan" seçeneğine dokunabilirsin.',
-  topicsTitle:'Ne konuda yardım istiyorsun?',tp_transfer:'Transfer',tp_card:'Kart',tp_account:'Hesap',tp_other:'Diğer',past:'Önceki sohbetler',noPast:'Henüz sohbet yok.',endChat:'Bitir',ended:'Bitti',rateQ:'Destekten memnun kaldın mı?',thanks:'Geri bildirimin için teşekkürler! 💚',newChat:'Yeni sohbet başlat',attach:'Dosya ekle',gotFile:'Dosyanı aldık, ekibimiz inceleyecek. (demo)',tpReply:x=>`Tamam, konu: ${x}. Sorunu kısaca yazar mısın? Aşağıdaki hazır sorulardan da seçebilirsin.`,txAsk:x=>`Bu işlemle ilgili yardım istiyorum: ${x}`,txReply:x=>`İşlemi buldum: ${x}. Durum: tamamlandı ✅. Bu işlemle ilgili sorun ne?`,txHelpBtn:'Bu işlemle ilgili yardım'},
+  topicsTitle:'Ne konuda yardım istiyorsun?',tp_transfer:'Transfer',tp_card:'Kart',tp_account:'Hesap',tp_other:'Diğer',past:'Önceki sohbetler',noPast:'Henüz sohbet yok.',endChat:'Bitir',ended:'Bitti',rateQ:'Destekten memnun kaldın mı?',thanks:'Geri bildirimin için teşekkürler! 💚',newChat:'Yeni sohbet başlat',attach:'Dosya ekle',gotFile:'Dosyanı aldık, ekibimiz inceleyecek. (demo)',tpReply:x=>`Tamam, konu: ${x}. Sorunu kısaca yazar mısın? Aşağıdaki hazır sorulardan da seçebilirsin.`,txAsk:x=>`Bu işlemle ilgili yardım istiyorum: ${x}`,txReply:x=>`İşlemi buldum: ${x}. Durum: tamamlandı ✅. Bu işlemle ilgili sorun ne?`,txHelpBtn:'Bu işlemle ilgili yardım',
+  aNotArrived:x=>`Son transferini kontrol ettim: ${x}. Bizim tarafta durumu: gönderildi ✅. Çoğu transfer saniyeler içinde ulaşır, ama alıcının bankası bazen 1 iş gününe kadar bekletebilir. Alıcının IBAN'ı doğru muydu? 24 saat içinde ulaşmazsa "Temsilciye bağlan" de, ekibimiz bankayla iletişime geçsin.`,aNotArrivedNone:'Hesabında henüz gönderilmiş bir transfer göremiyorum. Hangi transferden bahsediyorsun? İşlemler sayfasından ilgili işleme dokunup "yardım" diyebilirsin.',aSend:(a,n)=>`${n} adlı kişiye ${a} göndermek istiyorsun. Aşağıdaki butona dokun, bilgileri senin için doldurdum, sadece kontrol edip onayla.`,aSendNoName:a=>`${a} göndermek istiyorsun. Butona dokun, tutarı doldurdum. Sonra alıcıyı seç.`,openSend:'Gönderme ekranını aç',aHello:'Merhaba! 😊 Transfer, kart, hesap ya da ücretlerle ilgili ne sormak istersin?',aThanks:'Rica ederim! Başka bir konuda yardım lazım olursa buradayım. 💚',aBalance:x=>`Toplam bakiyen şu an ${x}. Para birimine göre dağılımı ana sayfada görebilirsin.`,fallback2:'Tam anlayamadım, kusura bakma. Biraz daha açar mısın? Örneğin: "Transferim ulaşmadı", "Kartımı kaybettim" ya da "Ücretler ne kadar?"',agentAck:'Anladım, hemen kontrol ediyorum. Birkaç dakika içinde sana dönüş yapacağım. (demo yanıt)',agentAck2:'Not aldım, ekibimiz bu konuyu inceliyor. Eklemek istediğin bir şey var mı? (demo yanıt)',agentStill:'Zaten bir temsilciyle konuşuyorsun, buradayım. 🙂 (demo)'},
  en:{home:'Home',card:'Card',send:'Send',activity:'Activity',account:'Account',total:'Total balance',add:'Add',convert:'Convert',details:'Account details',
   balances:'Balances',recent:'Recent activity',seeAll:'See all',noTx:'No transactions yet.',sendMoney:'Send money',youSend:'You send',balance:'Balance',
   recipientGets:'Recipient gets',cont:'Continue',whoTo:'Who are you sending to?',noRcp:c=>`No saved ${c} recipients yet.`,newRcp:c=>`Add a new ${c} recipient`,
@@ -170,7 +171,8 @@ const T = {
   limits:'Spending limit',limitV:'2,000 EUR / month',virtual:'Virtual card',holder:'Account holder',bic:'BIC / SWIFT',copy:'Copy',copied:'Copied',
   detailsNote:'Others can pay you using these details (demo — not a real account).',expires:'Expires',cardNote:'Spend in 40+ currencies with low fees (demo).',
   support:'Live support',online:'Online · usually replies within 1 min',typeMsg:'Type a message…',typing:'Typing…',bot:'PayLite Assistant',agent:'Support team (demo)',greet:'Hi Ali! 👋 I\'m the PayLite assistant. How can I help?',q1:'How long does a transfer take?',q2:'Fees',q3:'I lost my card',q4:'Talk to an agent',a1:'Most transfers arrive in seconds. Some bank transfers can take up to 1 business day.',a2:'The fee is 0.45% plus a small fixed amount. We use the mid-market rate with no hidden markup — the Send screen shows the full breakdown.',a3:'You can freeze your card right away in the Card tab ❄️ An agent will help you order a new one.',a4:'Connecting you to an agent…',agentHi:'Hi, this is the support team. We got your request — how can we help? (This is a demo reply.)',fallback:'Got it. Want me to pass you to an agent? Tap "Talk to an agent".',
-  topicsTitle:'What do you need help with?',tp_transfer:'Transfer',tp_card:'Card',tp_account:'Account',tp_other:'Other',past:'Previous chats',noPast:'No chats yet.',endChat:'End',ended:'Ended',rateQ:'How was your support?',thanks:'Thanks for your feedback! 💚',newChat:'Start a new chat',attach:'Attach file',gotFile:'We got your file — our team will review it. (demo)',tpReply:x=>`Okay, topic: ${x}. Can you briefly describe the issue? You can also pick a question below.`,txAsk:x=>`I need help with this transaction: ${x}`,txReply:x=>`I found it: ${x}. Status: completed ✅. What's the issue with it?`,txHelpBtn:'Get help with this'},
+  topicsTitle:'What do you need help with?',tp_transfer:'Transfer',tp_card:'Card',tp_account:'Account',tp_other:'Other',past:'Previous chats',noPast:'No chats yet.',endChat:'End',ended:'Ended',rateQ:'How was your support?',thanks:'Thanks for your feedback! 💚',newChat:'Start a new chat',attach:'Attach file',gotFile:'We got your file — our team will review it. (demo)',tpReply:x=>`Okay, topic: ${x}. Can you briefly describe the issue? You can also pick a question below.`,txAsk:x=>`I need help with this transaction: ${x}`,txReply:x=>`I found it: ${x}. Status: completed ✅. What's the issue with it?`,txHelpBtn:'Get help with this',
+  aNotArrived:x=>`I checked your last transfer: ${x}. On our side it shows as sent ✅. Most transfers arrive in seconds, but the recipient's bank can hold it for up to 1 business day. Was the IBAN correct? If it hasn't arrived within 24 hours, tap "Talk to an agent" and our team will contact the bank.`,aNotArrivedNone:'I can\'t see any sent transfers yet. Which one do you mean? You can also tap a transaction in Activity and choose "help".',aSend:(a,n)=>`You want to send ${a} to ${n}. Tap the button below — I've filled in the details, just review and confirm.`,aSendNoName:a=>`You want to send ${a}. Tap the button — the amount is filled in, then pick a recipient.`,openSend:'Open send screen',aHello:'Hi! 😊 What can I help you with — transfers, card, account or fees?',aThanks:'You\'re welcome! I\'m here if you need anything else. 💚',aBalance:x=>`Your total balance is ${x}. You can see the split by currency on the home screen.`,fallback2:'Sorry, I didn\'t quite get that. Could you say a bit more? For example: "My transfer hasn\'t arrived", "I lost my card" or "What are the fees?"',agentAck:'Got it, I\'m checking now and will get back to you in a few minutes. (demo reply)',agentAck2:'Noted — our team is looking into it. Anything else to add? (demo reply)',agentStill:'You\'re already chatting with an agent — I\'m here. 🙂 (demo)'},
  pl:{home:'Start',card:'Karta',send:'Wyślij',activity:'Historia',account:'Konto',total:'Saldo łączne',add:'Wpłać',convert:'Wymień',details:'Dane konta',
   balances:'Salda',recent:'Ostatnie transakcje',seeAll:'Wszystkie',noTx:'Brak transakcji.',sendMoney:'Wyślij pieniądze',youSend:'Wysyłasz',balance:'Saldo',
   recipientGets:'Odbiorca otrzyma',cont:'Dalej',whoTo:'Do kogo wysyłasz?',noRcp:c=>`Brak zapisanych odbiorców ${c}.`,newRcp:c=>`Dodaj odbiorcę ${c}`,
@@ -186,7 +188,8 @@ const T = {
   limits:'Limit wydatków',limitV:'2 000 EUR / mies.',virtual:'Karta wirtualna',holder:'Właściciel konta',bic:'BIC / SWIFT',copy:'Kopiuj',copied:'Skopiowano',
   detailsNote:'Inni mogą wpłacać na te dane (demo — to nie jest prawdziwe konto).',expires:'Ważna do',cardNote:'Płać w ponad 40 walutach z niskimi opłatami (demo).',
   support:'Czat na żywo',online:'Online · zwykle odpowiadamy w 1 min',typeMsg:'Napisz wiadomość…',typing:'Pisze…',bot:'Asystent PayLite',agent:'Zespół wsparcia (demo)',greet:'Cześć Ali! 👋 Jestem asystentem PayLite. W czym mogę pomóc?',q1:'Ile trwa przelew?',q2:'Opłaty',q3:'Zgubiłem kartę',q4:'Połącz z konsultantem',a1:'Większość przelewów dociera w kilka sekund. Niektóre przelewy bankowe trwają do 1 dnia roboczego.',a2:'Opłata to 0,45% plus niewielka kwota stała. Stosujemy kurs średni bez ukrytej marży — pełne rozliczenie widać na ekranie Wyślij.',a3:'Możesz od razu zablokować kartę w zakładce Karta ❄️ Konsultant pomoże zamówić nową.',a4:'Łączę z konsultantem…',agentHi:'Dzień dobry, tu zespół wsparcia. Otrzymaliśmy zgłoszenie — w czym możemy pomóc? (To odpowiedź demo.)',fallback:'Rozumiem. Połączyć z konsultantem? Wybierz "Połącz z konsultantem".',
-  topicsTitle:'W czym możemy pomóc?',tp_transfer:'Przelew',tp_card:'Karta',tp_account:'Konto',tp_other:'Inne',past:'Poprzednie rozmowy',noPast:'Brak rozmów.',endChat:'Zakończ',ended:'Zakończona',rateQ:'Jak oceniasz pomoc?',thanks:'Dziękujemy za opinię! 💚',newChat:'Nowa rozmowa',attach:'Dodaj plik',gotFile:'Otrzymaliśmy plik — zespół go sprawdzi. (demo)',tpReply:x=>`Dobrze, temat: ${x}. Opisz krótko problem albo wybierz pytanie poniżej.`,txAsk:x=>`Potrzebuję pomocy z tą transakcją: ${x}`,txReply:x=>`Znalazłem: ${x}. Status: zakończona ✅. Jaki jest problem?`,txHelpBtn:'Pomoc z tą transakcją'},
+  topicsTitle:'W czym możemy pomóc?',tp_transfer:'Przelew',tp_card:'Karta',tp_account:'Konto',tp_other:'Inne',past:'Poprzednie rozmowy',noPast:'Brak rozmów.',endChat:'Zakończ',ended:'Zakończona',rateQ:'Jak oceniasz pomoc?',thanks:'Dziękujemy za opinię! 💚',newChat:'Nowa rozmowa',attach:'Dodaj plik',gotFile:'Otrzymaliśmy plik — zespół go sprawdzi. (demo)',tpReply:x=>`Dobrze, temat: ${x}. Opisz krótko problem albo wybierz pytanie poniżej.`,txAsk:x=>`Potrzebuję pomocy z tą transakcją: ${x}`,txReply:x=>`Znalazłem: ${x}. Status: zakończona ✅. Jaki jest problem?`,txHelpBtn:'Pomoc z tą transakcją',
+  aNotArrived:x=>`Sprawdziłem ostatni przelew: ${x}. U nas ma status: wysłany ✅. Większość przelewów dociera w kilka sekund, ale bank odbiorcy może go przetrzymać do 1 dnia roboczego. Czy IBAN był poprawny? Jeśli nie dotrze w ciągu 24 godzin, wybierz "Połącz z konsultantem".`,aNotArrivedNone:'Nie widzę jeszcze żadnych wysłanych przelewów. O który chodzi? Możesz też wybrać transakcję w Historii i kliknąć "pomoc".',aSend:(a,n)=>`Chcesz wysłać ${a} do ${n}. Kliknij przycisk poniżej — dane są wypełnione, wystarczy sprawdzić i potwierdzić.`,aSendNoName:a=>`Chcesz wysłać ${a}. Kliknij przycisk — kwota jest wpisana, potem wybierz odbiorcę.`,openSend:'Otwórz ekran przelewu',aHello:'Cześć! 😊 W czym pomóc — przelewy, karta, konto czy opłaty?',aThanks:'Nie ma za co! Jestem tu, gdyby coś jeszcze było potrzebne. 💚',aBalance:x=>`Twoje saldo łączne to ${x}. Podział na waluty widać na ekranie głównym.`,fallback2:'Przepraszam, nie do końca rozumiem. Napisz trochę więcej, np.: "Przelew nie dotarł", "Zgubiłem kartę" albo "Jakie są opłaty?"',agentAck:'Rozumiem, już sprawdzam i odezwę się za kilka minut. (odpowiedź demo)',agentAck2:'Zanotowane — zespół się tym zajmuje. Chcesz coś dodać? (odpowiedź demo)',agentStill:'Już rozmawiasz z konsultantem — jestem tutaj. 🙂 (demo)'},
  de:{home:'Start',card:'Karte',send:'Senden',activity:'Aktivität',account:'Konto',total:'Gesamtguthaben',add:'Einzahlen',convert:'Umtauschen',details:'Kontodaten',
   balances:'Guthaben',recent:'Letzte Aktivität',seeAll:'Alle',noTx:'Noch keine Transaktionen.',sendMoney:'Geld senden',youSend:'Du sendest',balance:'Guthaben',
   recipientGets:'Empfänger erhält',cont:'Weiter',whoTo:'An wen sendest du?',noRcp:c=>`Noch keine ${c}-Empfänger gespeichert.`,newRcp:c=>`Neuen ${c}-Empfänger hinzufügen`,
@@ -202,7 +205,8 @@ const T = {
   limits:'Ausgabelimit',limitV:'2.000 EUR / Monat',virtual:'Virtuelle Karte',holder:'Kontoinhaber',bic:'BIC / SWIFT',copy:'Kopieren',copied:'Kopiert',
   detailsNote:'Andere können dir mit diesen Daten Geld senden (Demo — kein echtes Konto).',expires:'Gültig bis',cardNote:'In 40+ Währungen günstig bezahlen (Demo).',
   support:'Live-Support',online:'Online · Antwort meist in 1 Min.',typeMsg:'Nachricht schreiben…',typing:'Schreibt…',bot:'PayLite Assistent',agent:'Support-Team (Demo)',greet:'Hallo Ali! 👋 Ich bin der PayLite-Assistent. Wie kann ich helfen?',q1:'Wie lange dauert eine Überweisung?',q2:'Gebühren',q3:'Karte verloren',q4:'Mit Mitarbeiter sprechen',a1:'Die meisten Überweisungen kommen in Sekunden an. Manche Banküberweisungen dauern bis zu 1 Werktag.',a2:'Die Gebühr beträgt 0,45 % plus einen kleinen Fixbetrag. Wir nutzen den Mittelkurs ohne versteckten Aufschlag — im Senden-Bildschirm siehst du alles.',a3:'Du kannst die Karte sofort im Tab Karte sperren ❄️ Ein Mitarbeiter hilft dir mit einer neuen Karte.',a4:'Ich verbinde dich mit einem Mitarbeiter…',agentHi:'Hallo, hier ist das Support-Team. Wir haben deine Anfrage erhalten — wie können wir helfen? (Dies ist eine Demo-Antwort.)',fallback:'Verstanden. Soll ich dich an einen Mitarbeiter weiterleiten? Tippe auf "Mit Mitarbeiter sprechen".',
-  topicsTitle:'Wobei brauchst du Hilfe?',tp_transfer:'Überweisung',tp_card:'Karte',tp_account:'Konto',tp_other:'Sonstiges',past:'Frühere Chats',noPast:'Noch keine Chats.',endChat:'Beenden',ended:'Beendet',rateQ:'Wie zufrieden warst du mit dem Support?',thanks:'Danke für dein Feedback! 💚',newChat:'Neuen Chat starten',attach:'Datei anhängen',gotFile:'Datei erhalten — unser Team prüft sie. (Demo)',tpReply:x=>`Alles klar, Thema: ${x}. Beschreib kurz dein Anliegen oder wähle unten eine Frage.`,txAsk:x=>`Ich brauche Hilfe zu dieser Transaktion: ${x}`,txReply:x=>`Gefunden: ${x}. Status: abgeschlossen ✅. Was ist das Problem?`,txHelpBtn:'Hilfe zu dieser Transaktion'},
+  topicsTitle:'Wobei brauchst du Hilfe?',tp_transfer:'Überweisung',tp_card:'Karte',tp_account:'Konto',tp_other:'Sonstiges',past:'Frühere Chats',noPast:'Noch keine Chats.',endChat:'Beenden',ended:'Beendet',rateQ:'Wie zufrieden warst du mit dem Support?',thanks:'Danke für dein Feedback! 💚',newChat:'Neuen Chat starten',attach:'Datei anhängen',gotFile:'Datei erhalten — unser Team prüft sie. (Demo)',tpReply:x=>`Alles klar, Thema: ${x}. Beschreib kurz dein Anliegen oder wähle unten eine Frage.`,txAsk:x=>`Ich brauche Hilfe zu dieser Transaktion: ${x}`,txReply:x=>`Gefunden: ${x}. Status: abgeschlossen ✅. Was ist das Problem?`,txHelpBtn:'Hilfe zu dieser Transaktion',
+  aNotArrived:x=>`Ich habe deine letzte Überweisung geprüft: ${x}. Bei uns ist sie als gesendet markiert ✅. Die meisten Überweisungen kommen in Sekunden an, die Bank des Empfängers kann sie aber bis zu 1 Werktag halten. War die IBAN korrekt? Wenn sie in 24 Stunden nicht da ist, tippe auf "Mit Mitarbeiter sprechen".`,aNotArrivedNone:'Ich sehe noch keine gesendeten Überweisungen. Welche meinst du? Du kannst auch in Aktivität eine Transaktion antippen und "Hilfe" wählen.',aSend:(a,n)=>`Du möchtest ${a} an ${n} senden. Tippe unten auf den Button — ich habe alles ausgefüllt, du musst nur prüfen und bestätigen.`,aSendNoName:a=>`Du möchtest ${a} senden. Tippe auf den Button — der Betrag ist eingetragen, dann den Empfänger wählen.`,openSend:'Senden öffnen',aHello:'Hallo! 😊 Wobei kann ich helfen — Überweisungen, Karte, Konto oder Gebühren?',aThanks:'Gern geschehen! Ich bin da, falls du noch etwas brauchst. 💚',aBalance:x=>`Dein Gesamtguthaben beträgt ${x}. Die Aufteilung nach Währungen siehst du auf der Startseite.`,fallback2:'Entschuldige, das habe ich nicht ganz verstanden. Kannst du es etwas genauer sagen? Zum Beispiel: "Überweisung nicht angekommen", "Karte verloren" oder "Wie hoch sind die Gebühren?"',agentAck:'Verstanden, ich prüfe das sofort und melde mich in ein paar Minuten. (Demo-Antwort)',agentAck2:'Notiert — unser Team kümmert sich darum. Möchtest du noch etwas ergänzen? (Demo-Antwort)',agentStill:'Du sprichst bereits mit einem Mitarbeiter — ich bin da. 🙂 (Demo)'},
 };
 const CURN = {
   EUR:{tr:'Euro',en:'Euro',pl:'Euro',de:'Euro'}, PLN:{tr:'Polonya zlotisi',en:'Polish złoty',pl:'Złoty',de:'Polnischer Złoty'},
@@ -316,24 +320,59 @@ function botSay(key, who = 'bot', delay = 900, args){
   typing = true; render(); scrollChat();
   setTimeout(() => { typing = false; push({from:who, key, args}); if (sub==='support') { render(); scrollChat(); } }, delay);
 }
-function answerFor(text){
-  const x = text.toLocaleLowerCase();
+function norm(x){
+  const map = {'ı':'i','İ':'i','ş':'s','ğ':'g','ü':'u','ö':'o','ç':'c','ä':'a','ß':'ss','ł':'l','ą':'a','ę':'e','ś':'s','ż':'z','ź':'z','ć':'c','ń':'n','ó':'o'};
+  return x.toLowerCase().replace(/[ıİşğüöçäßłąęśżźćńó]/g, c => map[c] || c);
+}
+function findAmount(x){
+  const m = x.match(/(\d+(?:[.,]\d+)?)\s*(bin|k\b|tys|tausend|thousand)?/);
+  if (!m) return 0;
+  let v = parseFloat(m[1].replace(',', '.')); if (m[2]) v *= 1000; return v;
+}
+function findRecipient(x){
+  return S.rcp.findIndex(r => norm(r.name).split(' ').some(w => w.length >= 3 && x.includes(w.slice(0, 4))));
+}
+function lastSent(){ const x = S.tx.find(y => y.type === 'sent'); return x ? `${x.title} · ${fmt(x.fa, x.fc)}` : null; }
+function intent(text){
+  const x = norm(text);
   const has = (...w) => w.some(k => x.includes(k));
-  if (has('süre','ne zaman','long','how long','ile trwa','kiedy','dauer','wann')) return 'a1';
-  if (has('ücret','fee','opłat','prowizj','gebühr','kosten','kur','rate')) return 'a2';
-  if (has('kart','card','karta','karte','kayb','lost','zgubi','verlor','çalın','stolen')) return 'a3';
-  if (has('temsilci','insan','agent','human','konsultant','mitarbeiter','człowiek','mensch')) return 'q4';
-  return 'fallback';
+  if (has('ulasmadi','dusmedi','gelmedi','gecmedi','ulasmamis','gitmedi','not arrived','didnt arrive','didn\'t arrive','not received','havent received','nie dotar','nie doszl','nie przysz','nie otrzym','nicht angekommen','nicht erhalten','kam nicht','nicht da'))
+    { const l = lastSent(); return l ? {key:'aNotArrived', args:[l]} : {key:'aNotArrivedNone'}; }
+  const amt = findAmount(x), ri = findRecipient(x);
+  if (amt > 0 && (ri >= 0 || has('gonder','yolla','havale','send','transfer','wysl','przelej','przelew','sende','schick','uberweis')))
+    return ri >= 0 ? {key:'aSend', args:[fmt(amt,'EUR'), S.rcp[ri].name], action:{type:'send', amt, ri}}
+                   : {key:'aSendNoName', args:[fmt(amt,'EUR')], action:{type:'send', amt, ri:-1}};
+  if (has('temsilci','insan','canli','agent','human','person','konsultant','czlowiek','mitarbeiter','mensch')) return {key:'q4'};
+  if (has('sure','ne zaman','ne kadar','how long','when','ile trwa','kiedy','dauer','wann')) return {key:'a1'};
+  if (has('ucret','masraf','komisyon','fee','cost','oplat','prowizj','koszt','gebuhr','kosten','kur ','rate','kurs')) return {key:'a2'};
+  if (has('kart','card','karte','kayb','lost','zgubi','verlor','calin','stolen','skradz','gestohlen')) return {key:'a3'};
+  if (has('bakiye','param ne','balance','saldo','guthaben','kontostand')) return {key:'aBalance', args:[fmt(total(),'EUR')]};
+  if (has('tesekkur','sagol','eyvallah','thank','danke','dzieki','dziekuje')) return {key:'aThanks'};
+  if (has('merhaba','selam','hello','hi ','hey','hallo','czesc','dzien dobry','guten tag')) return {key:'aHello'};
+  return null;
 }
 function toAgent(){
+  const c = chat(); if (c) { c.agent = true; save(); }
   if (tawkReady) { push({from:'bot', key:'a4'}); render(); try { window.Tawk_API.showWidget(); window.Tawk_API.maximize(); } catch(e) {} return; }
   botSay('a4'); setTimeout(() => botSay('agentHi','agent',1600), 1100);
 }
+let fbTurn = 0;
 function userAsk(textOrKey, isKey){
   push(isKey ? {from:'me', key:textOrKey} : {from:'me', text:textOrKey});
-  const k = isKey ? textOrKey.replace('q','a') : answerFor(textOrKey);
-  if (k === 'a4' || k === 'q4') return toAgent();
-  botSay(k);
+  const c = chat(), who = c && c.agent ? 'agent' : 'bot';
+  if (isKey) {
+    if (textOrKey === 'q4') return c && c.agent ? botSay('agentStill','agent') : toAgent();
+    return botSay(textOrKey.replace('q','a'), who);
+  }
+  const r = intent(textOrKey);
+  if (r && r.key === 'q4') return c && c.agent ? botSay('agentStill','agent') : toAgent();
+  if (r) return botSayX(r, who);
+  if (c && c.agent) return botSay(['agentAck','agentAck2'][fbTurn++ % 2], 'agent', 1400);
+  botSay(['fallback','fallback2'][fbTurn++ % 2]);
+}
+function botSayX(r, who){
+  typing = true; render(); scrollChat();
+  setTimeout(() => { typing = false; push({from:who, key:r.key, args:r.args, action:r.action}); if (sub==='support') { render(); scrollChat(); } }, 900);
 }
 function newChat(topic, txIdx){
   S.chats = S.chats || [];
@@ -354,7 +393,8 @@ function bubble(m){
   const who = m.from!=='me' ? `<div class="who">${m.from==='agent'?t('agent'):t('bot')}</div>` : '';
   const body = m.img ? `<img src="${m.img}" style="max-width:200px;border-radius:12px;display:block">` :
                m.file ? `📎 ${esc(m.file)}` : esc(msgText(m));
-  return `<div class="msg ${m.from==='me'?'me':'bot'}">${who}${body}</div>`;
+  const act = m.action && m.action.type==='send' ? `<button class="copy" style="margin:10px 0 0;padding:8px 12px" data-act='${JSON.stringify(m.action)}'>${t('openSend')} →</button>` : '';
+  return `<div class="msg ${m.from==='me'?'me':'bot'}">${who}${body}${act}</div>`;
 }
 function vSupport(){
   S.chats = S.chats || [];
@@ -645,6 +685,12 @@ function bind(){
   document.querySelectorAll('[data-back-chat]').forEach(b => b.onclick = () => { curChat = null; render(); window.scrollTo(0,0); });
   document.querySelectorAll('[data-rate]').forEach(b => b.onclick = () => { chat().rating = b.dataset.rate; save(); render(); scrollChat(); });
   document.querySelectorAll('[data-txhelp]').forEach(b => b.onclick = () => { sub = 'support'; newChat('transfer', +b.dataset.txhelp); });
+  document.querySelectorAll('[data-act]').forEach(b => b.onclick = () => {
+    const a = JSON.parse(b.dataset.act); resetSend();
+    send.amt = String(Math.round(a.amt*100)/100); send.from = 'EUR';
+    if (a.ri >= 0 && S.rcp[a.ri]) { send.to = S.rcp[a.ri].cur; if (a.amt <= (S.bal.EUR||0)) { send.rcp = a.ri; send.step = 2; } }
+    sub = null; tab = 'send'; render(); window.scrollTo(0,0);
+  });
   if ($('endchat')) $('endchat').onclick = () => { chat().ended = true; save(); render(); scrollChat(); };
   if ($('newchat')) $('newchat').onclick = () => { curChat = null; render(); window.scrollTo(0,0); };
   if ($('cform')) {
