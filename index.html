@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="PayLite">
+<meta name="theme-color" content="#ffffff">
+<title>PayLite</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --lime:#9FE870; --forest:#163300; --mist:#F2F5EE; --ink:#0E0F0C; --gray:#6A6C6A;
+    --line:#E8EBE6; --err:#C9302C;
+    --st:env(safe-area-inset-top,0px); --sb:env(safe-area-inset-bottom,0px);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;height:100%;background:#fff;color:var(--ink);font-family:Inter,-apple-system,system-ui,sans-serif}
+  body{display:flex;justify-content:center}
+  #app{width:100%;max-width:480px;min-height:100%;position:relative;padding-top:var(--st)}
+  main{padding:20px 20px calc(96px + var(--sb))}
+  h1{font-size:26px;font-weight:800;margin:4px 0 16px}
+  .muted{color:var(--gray)}
+  .small{font-size:13px}
+  .total{font-size:36px;font-weight:800;color:var(--forest);letter-spacing:-.5px;margin:2px 0 18px}
+  .actions{display:flex;justify-content:space-between;gap:4px;margin-bottom:26px}
+  .act{flex:1;min-width:0}
+  .act{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:13px;font-weight:600;background:none;border:0;cursor:pointer;color:var(--ink)}
+  .act span{width:56px;height:56px;border-radius:50%;background:var(--lime);display:grid;place-items:center;color:var(--forest)}
+  .sec{display:flex;justify-content:space-between;align-items:center;margin:8px 0 10px}
+  .sec h2{font-size:18px;margin:0}
+  .link{background:none;border:0;color:var(--forest);font-weight:700;text-decoration:underline;font-size:14px;cursor:pointer}
+  .cards{display:flex;gap:12px;overflow-x:auto;padding-bottom:6px;margin:0 -20px 22px;padding-left:20px;padding-right:20px;scrollbar-width:none}
+  .cards::-webkit-scrollbar{display:none}
+  .card{flex:0 0 140px;background:var(--mist);border-radius:20px;padding:16px}
+  .card .flag{font-size:28px}
+  .card .amt{font-weight:700;font-size:18px;margin-top:18px}
+  .tx{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+  .ic{width:42px;height:42px;border-radius:50%;background:var(--mist);display:grid;place-items:center;color:var(--forest);flex:0 0 42px;font-weight:700}
+  .tx .mid{flex:1;min-width:0}
+  .tx .t{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tx .r{text-align:right;font-weight:600}
+  .box{background:var(--mist);border-radius:16px;padding:12px 14px}
+  .box label{font-size:12px;color:var(--gray);font-weight:600}
+  .row{display:flex;align-items:center;gap:10px}
+  .amtin{flex:1;min-width:0;border:0;background:transparent;font:800 26px Inter,system-ui;color:var(--ink);padding:6px 0;outline:none}
+  .amtout{flex:1;font:800 26px Inter,system-ui;padding:6px 0;overflow:hidden;text-overflow:ellipsis}
+  select.cur{appearance:none;-webkit-appearance:none;border:0;background:#fff;border-radius:20px;padding:9px 30px 9px 12px;font:700 15px Inter,system-ui;color:var(--ink);
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23163300' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 11px center}
+  .fees{padding:8px 4px 10px 18px;border-left:2px solid var(--line);margin:4px 0 4px 18px}
+  .kv{display:flex;justify-content:space-between;padding:5px 0;font-size:14px}
+  .kv span:first-child{color:var(--gray)}
+  .kv span:last-child{font-weight:600;text-align:right}
+  .kv.b span:last-child{font-weight:800}
+  .note{color:var(--forest);font-size:12px;font-weight:600;margin-top:4px}
+  .btn{display:block;width:100%;border:0;border-radius:28px;background:var(--lime);color:var(--forest);font:700 16px Inter,system-ui;padding:16px;margin-top:16px;cursor:pointer}
+  .btn:disabled{opacity:.4;cursor:default}
+  .btn.ghost{background:var(--mist)}
+  .err{color:var(--err);font-size:13px;margin-top:6px}
+  .ok{color:var(--forest);font-weight:600;margin-top:8px}
+  .back{display:flex;align-items:center;gap:8px;margin:0 0 14px}
+  .back button{background:var(--mist);border:0;width:38px;height:38px;border-radius:50%;font-size:18px;cursor:pointer;color:var(--forest)}
+  .back h1{margin:0;font-size:21px}
+  .rcp{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);cursor:pointer;background:none;border-left:0;border-right:0;border-top:0;width:100%;text-align:left;font:inherit;color:inherit}
+  .rcp .ic{background:var(--lime)}
+  input.txt{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:13px;font:500 16px Inter,system-ui;margin-top:10px;outline:none}
+  input.txt:focus{border-color:var(--forest)}
+  .done{text-align:center;padding-top:50px}
+  .check{width:96px;height:96px;border-radius:50%;background:var(--lime);display:grid;place-items:center;margin:0 auto 18px;color:var(--forest)}
+  .avatar{width:84px;height:84px;border-radius:50%;background:var(--lime);display:grid;place-items:center;font:800 30px Inter;color:var(--forest);margin:20px auto 12px}
+  .menu .kv{padding:15px 0;border-bottom:1px solid var(--line);font-size:15px}
+  .menu .kv span:first-child{color:var(--ink);font-weight:500}
+  nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:#fff;border-top:1px solid var(--line);
+    display:flex;padding:8px 6px calc(8px + var(--sb));z-index:5}
+  nav button{flex:1;background:none;border:0;display:flex;flex-direction:column;align-items:center;gap:3px;font:600 11px Inter,system-ui;color:var(--gray);cursor:pointer;padding:0}
+  nav button i{display:grid;place-items:center;width:52px;height:30px;border-radius:15px}
+  nav button.on{color:var(--forest)}
+  nav button.on i{background:var(--lime)}
+  svg{display:block}
+  .seg{display:flex;justify-content:center;margin:10px 0}
+  .swap{width:40px;height:40px;border-radius:50%;border:0;background:var(--lime);color:var(--forest);cursor:pointer;display:grid;place-items:center}
+
+  .top{display:flex;justify-content:space-between;align-items:center;margin-top:6px}
+  .lang{border:0;background:var(--mist);border-radius:18px;padding:7px 10px;font:600 13px Inter,system-ui;color:var(--forest)}
+  .bcard{border-radius:22px;padding:22px;color:#fff;background:linear-gradient(135deg,#163300 0%,#2c5a10 60%,#5e9a2f 100%);aspect-ratio:1.586;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;transition:filter .3s}
+  .bcard.frozen{filter:grayscale(1) brightness(.85)}
+  .bcard .brand{font-weight:800;font-size:20px;letter-spacing:-.3px}
+  .bcard .demo{position:absolute;top:22px;right:22px;background:var(--lime);color:var(--forest);font:800 11px Inter;padding:4px 8px;border-radius:8px}
+  .bcard .num{font:600 20px ui-monospace,Menlo,monospace;letter-spacing:2px}
+  .bcard .meta{display:flex;justify-content:space-between;font-size:12px;opacity:.9}
+  .bcard .meta b{display:block;font-size:14px;opacity:1;margin-top:2px}
+  .chip{width:40px;height:30px;border-radius:6px;background:linear-gradient(135deg,#e9d38a,#b89a3e)}
+  .tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+  .tile{background:var(--mist);border:0;border-radius:16px;padding:16px;text-align:left;font:600 14px Inter,system-ui;color:var(--ink);cursor:pointer;display:flex;flex-direction:column;gap:8px}
+  .tile span{color:var(--forest)}
+  .copy{border:0;background:var(--lime);color:var(--forest);border-radius:14px;padding:5px 10px;font:700 12px Inter;cursor:pointer;margin-left:8px}
+  .pill{display:inline-block;background:var(--mist);border-radius:14px;padding:4px 10px;font-size:12px;font-weight:600;color:var(--forest)}
+  .curtabs{display:flex;gap:8px;overflow-x:auto;margin:6px 0 14px}
+  .curtabs button{border:0;background:var(--mist);border-radius:18px;padding:8px 14px;font:600 14px Inter,system-ui;cursor:pointer;white-space:nowrap}
+  .curtabs button.on{background:var(--forest);color:#fff}
+  .chat{display:flex;flex-direction:column;gap:10px;padding-bottom:150px}
+  .msg{max-width:80%;padding:10px 14px;border-radius:18px;font-size:15px;line-height:1.4;white-space:pre-wrap}
+  .msg.bot{background:var(--mist);align-self:flex-start;border-bottom-left-radius:6px}
+  .msg.me{background:var(--forest);color:#fff;align-self:flex-end;border-bottom-right-radius:6px}
+  .msg .who{font-size:11px;font-weight:700;color:var(--forest);margin-bottom:3px}
+  .typing{align-self:flex-start;color:var(--gray);font-size:13px;padding-left:6px}
+  .chips{display:flex;gap:8px;overflow-x:auto;padding:8px 0;scrollbar-width:none}
+  .chips::-webkit-scrollbar{display:none}
+  .chips button{flex:0 0 auto;border:1.5px solid var(--forest);background:#fff;color:var(--forest);border-radius:18px;padding:7px 12px;font:600 13px Inter,system-ui;cursor:pointer}
+  .composer{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:#fff;border-top:1px solid var(--line);padding:6px 14px calc(10px + var(--sb));z-index:6}
+  .composer .row input{flex:1;border:1.5px solid var(--line);border-radius:22px;padding:12px 16px;font:500 16px Inter,system-ui;outline:none}
+  .composer .row button{width:46px;height:46px;border-radius:50%;border:0;background:var(--lime);color:var(--forest);cursor:pointer;display:grid;place-items:center}
+  .online{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--gray)}
+  .online:before{content:'';width:8px;height:8px;border-radius:50%;background:#37b24d}
+  .hd{border:0;background:var(--mist);border-radius:18px;width:36px;height:36px;display:grid;place-items:center;color:var(--forest);cursor:pointer;margin-right:8px}
+</style>
+</head>
+<body>
+<div id="app"><main id="view"></main><nav id="nav"></nav></div>
+
+<script>
+const ICON = {
+  home:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>',
+  send:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>',
+  list:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>',
+  user:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg>',
+  card:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>',
+  plus:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>',
+  swap:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 4L3 8l4 4M3 8h14M17 20l4-4-4-4M21 16H7"/></svg>',
+  bank:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10l9-6 9 6M5 10v8M10 10v8M14 10v8M19 10v8M3 21h18"/></svg>',
+  chat:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>',
+  check:'<svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 12.5l4.5 4.5L19 7"/></svg>',
+};
+
+// ---------------- translations
+const LANGS = {de:'🇩🇪 Deutsch', en:'🇬🇧 English', pl:'🇵🇱 Polski', tr:'🇹🇷 Türkçe'};
+const LOC = {tr:'tr-TR', en:'en-GB', pl:'pl-PL', de:'de-DE'};
+const T = {
+ tr:{home:'Ana sayfa',card:'Kart',send:'Gönder',activity:'İşlemler',account:'Hesap',total:'Toplam bakiye',add:'Yükle',convert:'Çevir',details:'Hesap bilgileri',
+  balances:'Bakiyeler',recent:'Son işlemler',seeAll:'Tümü',noTx:'Henüz işlem yok.',sendMoney:'Para gönder',youSend:'Sen gönderiyorsun',balance:'Bakiye',
+  recipientGets:'Alıcı alıyor',cont:'Devam et',whoTo:'Kime gönderiyorsun?',noRcp:c=>`Kayıtlı ${c} alıcın yok.`,newRcp:c=>`Yeni ${c} alıcısı ekle`,
+  fullName:'Ad soyad',iban:'IBAN / hesap numarası',addCont:'Ekle ve devam et',review:'Transferi kontrol et',sentAmt:'Gönderdiğin',fee:'Ücret',
+  convd:'Çevrilen',rate:'Kur',gets:n=>`${n} alır`,acc:'Hesap',arrives:'Varış',arrivesV:'Saniyeler içinde (demo)',confirm:'Onayla ve gönder',
+  enterAmt:'Tutar gir',insuf:'Yetersiz bakiye',sentOk:'Para gönderildi!',willGet:(n,a)=>`${n} ${a} alacak`,done:'Tamam',
+  convTitle:'Bakiyeler arası çevir',source:'Kaynak',target:'Hedef',convOk:(c,a)=>`Çevrildi. Yeni ${c} bakiyesi: ${a}`,pickDiff:'İki farklı para birimi seç',
+  addTitle:'Para yükle',amount:'Tutar',addNote:'Demo: para anında eklenir. Gerçek üründe bu bir banka havalesi veya kartla yükleme olur.',
+  feeL:'− Ücret (%0,45 + sabit)',convL:'= Çevrilecek tutar',rateL:'× Kur',noMarkup:'Gizli kur farkı yok — piyasa ortası kur (demo)',
+  added:'Bankadan yüklendi',convTx:(a,b)=>`${a} → ${b} çevrildi`,personal:'Kişisel bilgiler',security:'Güvenlik ve giriş',linked:'Bağlı banka hesapları',
+  notif:'Bildirimler',help:'Yardım',language:'Dil',reset:'Demo verilerini sıfırla',verified:'Kişisel hesap · Doğrulandı (demo)',
+  myCard:'Banka kartım',freeze:'Kartı dondur',unfreeze:'Kartı aç',frozen:'Kart donduruldu',active:'Kart aktif',show:'Bilgileri göster',hide:'Bilgileri gizle',
+  limits:'Harcama limiti',limitV:'2.000 EUR / ay',virtual:'Sanal kart',holder:'Hesap sahibi',bic:'BIC / SWIFT',copy:'Kopyala',copied:'Kopyalandı',
+  detailsNote:'Bu hesap bilgileriyle başkaları sana para gönderebilir (demo — gerçek hesap değil).',expires:'Son kullanma',cardNote:'Kartla 40+ para biriminde düşük ücretle harca (demo).',
+  support:'Canlı destek',online:'Çevrimiçi · genelde 1 dk içinde yanıt',typeMsg:'Mesajını yaz…',typing:'Yazıyor…',bot:'PayLite Asistan',agent:'Destek ekibi (demo)',greet:'Merhaba Ali! 👋 Ben PayLite asistanı. Sana nasıl yardımcı olabilirim?',q1:'Transfer ne kadar sürer?',q2:'Ücretler',q3:'Kartımı kaybettim',q4:'Temsilciye bağlan',a1:'Çoğu transfer saniyeler içinde ulaşır. Bazı banka transferleri 1 iş gününe kadar sürebilir.',a2:'Ücret %0,45 + küçük sabit bir tutar. Kuru piyasa ortası kurdan veriyoruz, gizli fark yok. Gönder ekranında tam dökümü görebilirsin.',a3:'Hemen Kart sekmesinden kartını dondurabilirsin ❄️ Yeni kart için bir temsilci sana yardımcı olacak.',a4:'Seni bir temsilciye bağlıyorum…',agentHi:'Merhaba, destek ekibinden yazıyorum. Talebini aldım, nasıl yardımcı olabilirim? (Bu bir demo yanıttır.)',fallback:'Anladım. Daha iyi yardımcı olabilmem için seni bir temsilciye aktarayım mı? "Temsilciye bağlan" seçeneğine dokunabilirsin.'},
+ en:{home:'Home',card:'Card',send:'Send',activity:'Activity',account:'Account',total:'Total balance',add:'Add',convert:'Convert',details:'Account details',
+  balances:'Balances',recent:'Recent activity',seeAll:'See all',noTx:'No transactions yet.',sendMoney:'Send money',youSend:'You send',balance:'Balance',
+  recipientGets:'Recipient gets',cont:'Continue',whoTo:'Who are you sending to?',noRcp:c=>`No saved ${c} recipients yet.`,newRcp:c=>`Add a new ${c} recipient`,
+  fullName:'Full name',iban:'IBAN / account number',addCont:'Add and continue',review:'Review transfer',sentAmt:'You send',fee:'Fee',
+  convd:'We convert',rate:'Rate',gets:n=>`${n} gets`,acc:'Account',arrives:'Arrives',arrivesV:'In seconds (demo)',confirm:'Confirm and send',
+  enterAmt:'Enter an amount',insuf:'Insufficient balance',sentOk:'Money sent!',willGet:(n,a)=>`${n} receives ${a}`,done:'Done',
+  convTitle:'Convert balances',source:'From',target:'To',convOk:(c,a)=>`Converted. New ${c} balance: ${a}`,pickDiff:'Pick two different currencies',
+  addTitle:'Add money',amount:'Amount',addNote:'Demo: money is added instantly. In a real product this would be a bank transfer or card top-up.',
+  feeL:'− Fee (0.45% + fixed)',convL:'= Amount we convert',rateL:'× Rate',noMarkup:'No hidden markup — mid-market rate (demo)',
+  added:'Added from bank',convTx:(a,b)=>`Converted ${a} → ${b}`,personal:'Personal details',security:'Security & login',linked:'Linked bank accounts',
+  notif:'Notifications',help:'Help',language:'Language',reset:'Reset demo data',verified:'Personal account · Verified (demo)',
+  myCard:'My debit card',freeze:'Freeze card',unfreeze:'Unfreeze card',frozen:'Card frozen',active:'Card active',show:'Show details',hide:'Hide details',
+  limits:'Spending limit',limitV:'2,000 EUR / month',virtual:'Virtual card',holder:'Account holder',bic:'BIC / SWIFT',copy:'Copy',copied:'Copied',
+  detailsNote:'Others can pay you using these details (demo — not a real account).',expires:'Expires',cardNote:'Spend in 40+ currencies with low fees (demo).',
+  support:'Live support',online:'Online · usually replies within 1 min',typeMsg:'Type a message…',typing:'Typing…',bot:'PayLite Assistant',agent:'Support team (demo)',greet:'Hi Ali! 👋 I\'m the PayLite assistant. How can I help?',q1:'How long does a transfer take?',q2:'Fees',q3:'I lost my card',q4:'Talk to an agent',a1:'Most transfers arrive in seconds. Some bank transfers can take up to 1 business day.',a2:'The fee is 0.45% plus a small fixed amount. We use the mid-market rate with no hidden markup — the Send screen shows the full breakdown.',a3:'You can freeze your card right away in the Card tab ❄️ An agent will help you order a new one.',a4:'Connecting you to an agent…',agentHi:'Hi, this is the support team. We got your request — how can we help? (This is a demo reply.)',fallback:'Got it. Want me to pass you to an agent? Tap "Talk to an agent".'},
+ pl:{home:'Start',card:'Karta',send:'Wyślij',activity:'Historia',account:'Konto',total:'Saldo łączne',add:'Wpłać',convert:'Wymień',details:'Dane konta',
+  balances:'Salda',recent:'Ostatnie transakcje',seeAll:'Wszystkie',noTx:'Brak transakcji.',sendMoney:'Wyślij pieniądze',youSend:'Wysyłasz',balance:'Saldo',
+  recipientGets:'Odbiorca otrzyma',cont:'Dalej',whoTo:'Do kogo wysyłasz?',noRcp:c=>`Brak zapisanych odbiorców ${c}.`,newRcp:c=>`Dodaj odbiorcę ${c}`,
+  fullName:'Imię i nazwisko',iban:'IBAN / numer konta',addCont:'Dodaj i kontynuuj',review:'Sprawdź przelew',sentAmt:'Wysyłasz',fee:'Opłata',
+  convd:'Wymieniamy',rate:'Kurs',gets:n=>`${n} otrzyma`,acc:'Konto',arrives:'Dotrze',arrivesV:'W kilka sekund (demo)',confirm:'Potwierdź i wyślij',
+  enterAmt:'Wpisz kwotę',insuf:'Niewystarczające saldo',sentOk:'Wysłano!',willGet:(n,a)=>`${n} otrzyma ${a}`,done:'Gotowe',
+  convTitle:'Wymiana walut',source:'Z',target:'Na',convOk:(c,a)=>`Wymieniono. Nowe saldo ${c}: ${a}`,pickDiff:'Wybierz dwie różne waluty',
+  addTitle:'Wpłać pieniądze',amount:'Kwota',addNote:'Demo: pieniądze dodawane są od razu. W prawdziwej aplikacji byłby to przelew lub karta.',
+  feeL:'− Opłata (0,45% + stała)',convL:'= Kwota do wymiany',rateL:'× Kurs',noMarkup:'Bez ukrytej marży — kurs średni (demo)',
+  added:'Wpłata z banku',convTx:(a,b)=>`Wymiana ${a} → ${b}`,personal:'Dane osobowe',security:'Bezpieczeństwo',linked:'Powiązane konta bankowe',
+  notif:'Powiadomienia',help:'Pomoc',language:'Język',reset:'Resetuj dane demo',verified:'Konto osobiste · Zweryfikowane (demo)',
+  myCard:'Moja karta',freeze:'Zablokuj kartę',unfreeze:'Odblokuj kartę',frozen:'Karta zablokowana',active:'Karta aktywna',show:'Pokaż dane',hide:'Ukryj dane',
+  limits:'Limit wydatków',limitV:'2 000 EUR / mies.',virtual:'Karta wirtualna',holder:'Właściciel konta',bic:'BIC / SWIFT',copy:'Kopiuj',copied:'Skopiowano',
+  detailsNote:'Inni mogą wpłacać na te dane (demo — to nie jest prawdziwe konto).',expires:'Ważna do',cardNote:'Płać w ponad 40 walutach z niskimi opłatami (demo).',
+  support:'Czat na żywo',online:'Online · zwykle odpowiadamy w 1 min',typeMsg:'Napisz wiadomość…',typing:'Pisze…',bot:'Asystent PayLite',agent:'Zespół wsparcia (demo)',greet:'Cześć Ali! 👋 Jestem asystentem PayLite. W czym mogę pomóc?',q1:'Ile trwa przelew?',q2:'Opłaty',q3:'Zgubiłem kartę',q4:'Połącz z konsultantem',a1:'Większość przelewów dociera w kilka sekund. Niektóre przelewy bankowe trwają do 1 dnia roboczego.',a2:'Opłata to 0,45% plus niewielka kwota stała. Stosujemy kurs średni bez ukrytej marży — pełne rozliczenie widać na ekranie Wyślij.',a3:'Możesz od razu zablokować kartę w zakładce Karta ❄️ Konsultant pomoże zamówić nową.',a4:'Łączę z konsultantem…',agentHi:'Dzień dobry, tu zespół wsparcia. Otrzymaliśmy zgłoszenie — w czym możemy pomóc? (To odpowiedź demo.)',fallback:'Rozumiem. Połączyć z konsultantem? Wybierz "Połącz z konsultantem".'},
+ de:{home:'Start',card:'Karte',send:'Senden',activity:'Aktivität',account:'Konto',total:'Gesamtguthaben',add:'Einzahlen',convert:'Umtauschen',details:'Kontodaten',
+  balances:'Guthaben',recent:'Letzte Aktivität',seeAll:'Alle',noTx:'Noch keine Transaktionen.',sendMoney:'Geld senden',youSend:'Du sendest',balance:'Guthaben',
+  recipientGets:'Empfänger erhält',cont:'Weiter',whoTo:'An wen sendest du?',noRcp:c=>`Noch keine ${c}-Empfänger gespeichert.`,newRcp:c=>`Neuen ${c}-Empfänger hinzufügen`,
+  fullName:'Vollständiger Name',iban:'IBAN / Kontonummer',addCont:'Hinzufügen und weiter',review:'Überweisung prüfen',sentAmt:'Du sendest',fee:'Gebühr',
+  convd:'Wir tauschen',rate:'Kurs',gets:n=>`${n} erhält`,acc:'Konto',arrives:'Ankunft',arrivesV:'In Sekunden (Demo)',confirm:'Bestätigen und senden',
+  enterAmt:'Betrag eingeben',insuf:'Guthaben reicht nicht',sentOk:'Geld gesendet!',willGet:(n,a)=>`${n} erhält ${a}`,done:'Fertig',
+  convTitle:'Guthaben umtauschen',source:'Von',target:'Nach',convOk:(c,a)=>`Umgetauscht. Neues ${c}-Guthaben: ${a}`,pickDiff:'Zwei verschiedene Währungen wählen',
+  addTitle:'Geld einzahlen',amount:'Betrag',addNote:'Demo: Geld wird sofort gutgeschrieben. Im echten Produkt wäre das eine Überweisung oder Kartenzahlung.',
+  feeL:'− Gebühr (0,45 % + fix)',convL:'= Umzutauschender Betrag',rateL:'× Kurs',noMarkup:'Kein versteckter Aufschlag — Mittelkurs (Demo)',
+  added:'Von Bank eingezahlt',convTx:(a,b)=>`${a} → ${b} umgetauscht`,personal:'Persönliche Daten',security:'Sicherheit & Login',linked:'Verknüpfte Bankkonten',
+  notif:'Benachrichtigungen',help:'Hilfe',language:'Sprache',reset:'Demodaten zurücksetzen',verified:'Privatkonto · Verifiziert (Demo)',
+  myCard:'Meine Debitkarte',freeze:'Karte sperren',unfreeze:'Karte entsperren',frozen:'Karte gesperrt',active:'Karte aktiv',show:'Details zeigen',hide:'Details verbergen',
+  limits:'Ausgabelimit',limitV:'2.000 EUR / Monat',virtual:'Virtuelle Karte',holder:'Kontoinhaber',bic:'BIC / SWIFT',copy:'Kopieren',copied:'Kopiert',
+  detailsNote:'Andere können dir mit diesen Daten Geld senden (Demo — kein echtes Konto).',expires:'Gültig bis',cardNote:'In 40+ Währungen günstig bezahlen (Demo).',
+  support:'Live-Support',online:'Online · Antwort meist in 1 Min.',typeMsg:'Nachricht schreiben…',typing:'Schreibt…',bot:'PayLite Assistent',agent:'Support-Team (Demo)',greet:'Hallo Ali! 👋 Ich bin der PayLite-Assistent. Wie kann ich helfen?',q1:'Wie lange dauert eine Überweisung?',q2:'Gebühren',q3:'Karte verloren',q4:'Mit Mitarbeiter sprechen',a1:'Die meisten Überweisungen kommen in Sekunden an. Manche Banküberweisungen dauern bis zu 1 Werktag.',a2:'Die Gebühr beträgt 0,45 % plus einen kleinen Fixbetrag. Wir nutzen den Mittelkurs ohne versteckten Aufschlag — im Senden-Bildschirm siehst du alles.',a3:'Du kannst die Karte sofort im Tab Karte sperren ❄️ Ein Mitarbeiter hilft dir mit einer neuen Karte.',a4:'Ich verbinde dich mit einem Mitarbeiter…',agentHi:'Hallo, hier ist das Support-Team. Wir haben deine Anfrage erhalten — wie können wir helfen? (Dies ist eine Demo-Antwort.)',fallback:'Verstanden. Soll ich dich an einen Mitarbeiter weiterleiten? Tippe auf "Mit Mitarbeiter sprechen".'},
+};
+const CURN = {
+  EUR:{tr:'Euro',en:'Euro',pl:'Euro',de:'Euro'}, PLN:{tr:'Polonya zlotisi',en:'Polish złoty',pl:'Złoty',de:'Polnischer Złoty'},
+  USD:{tr:'ABD doları',en:'US dollar',pl:'Dolar amerykański',de:'US-Dollar'}, GBP:{tr:'İngiliz sterlini',en:'British pound',pl:'Funt brytyjski',de:'Britisches Pfund'},
+  TRY:{tr:'Türk lirası',en:'Turkish lira',pl:'Lira turecka',de:'Türkische Lira'}, AZN:{tr:'Azerbaycan manatı',en:'Azerbaijani manat',pl:'Manat azerbejdżański',de:'Aserbaidschan-Manat'},
+};
+const FLAG = {EUR:'🇪🇺',PLN:'🇵🇱',USD:'🇺🇸',GBP:'🇬🇧',TRY:'🇹🇷',AZN:'🇦🇿'};
+// Demo rates: 1 EUR = x
+const RATE = {EUR:1, PLN:4.27, USD:1.08, GBP:0.84, TRY:37.6, AZN:1.84};
+// Demo receiving details — clearly not real accounts
+const DETAILS = {
+  EUR:[['IBAN','DE00 1234 5678 0000 0000 01'],['BIC / SWIFT','DEMOXXXX']],
+  PLN:[['IBAN','PL00 1234 5678 0000 0000 0000 0001'],['BIC / SWIFT','DEMOPLPW']],
+  USD:[['Account number','000000001'],['Routing (ACH)','000000000']],
+  GBP:[['Sort code','00-00-00'],['Account number','00000001']],
+  TRY:[['IBAN','TR00 0000 0000 0000 0000 0000 01'],['BIC / SWIFT','DEMOTRIS']],
+  AZN:[['IBAN','AZ00 DEMO 0000 0000 0000 0000 0001'],['BIC / SWIFT','DEMOAZ22']],
+};
+
+let lang = 'de';
+try { const l = localStorage.getItem('paylite-lang2'); if (l && T[l]) lang = l; } catch(e) {}
+const t = k => T[lang][k];
+
+const fmt = (v, c) => new Intl.NumberFormat(LOC[lang],{minimumFractionDigits:2,maximumFractionDigits:2}).format(v) + (c ? ' ' + c : '');
+const rate = (a,b) => RATE[b] / RATE[a];
+const parse = s => { const v = parseFloat(String(s).replace(',', '.')); return isFinite(v) ? v : 0; };
+const esc = s => String(s).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+
+function quote(amount, from, to){
+  if (amount <= 0) return {fee:0, conv:0, r:rate(from,to), get:0};
+  const fee = from === to ? 0 : amount * 0.0045 + 0.5 * rate('EUR', from);
+  const conv = Math.max(0, amount - fee);
+  const r = rate(from, to);
+  return {fee, conv, r, get: conv * r};
+}
+
+const now = Date.now(), DAY = 864e5;
+const DEFAULT = {
+  bal:{EUR:1250, PLN:3400, USD:410.5, TRY:0},
+  rcp:[
+    {name:'Kaja Sawicka', cur:'PLN', acc:'PL61 1090 •••• 4521'},
+    {name:'Mehmet Yılmaz', cur:'TRY', acc:'TR33 0006 •••• 1290'},
+    {name:'John Smith', cur:'GBP', acc:'GB29 NWBK •••• 2681'},
+  ],
+  tx:[
+    {type:'sent', title:'Kaja Sawicka', fa:200, fc:'EUR', ta:852.4, tc:'PLN', fee:1.5, t:now-2*DAY},
+    {type:'add', fa:1000, fc:'EUR', ta:1000, tc:'EUR', fee:0, t:now-5*DAY},
+  ],
+  frozen:false,
+};
+let S;
+try { S = JSON.parse(localStorage.getItem('paylite')) || null; } catch(e) { S = null; }
+if (!S) S = JSON.parse(JSON.stringify(DEFAULT));
+const save = () => { try { localStorage.setItem('paylite', JSON.stringify(S)); } catch(e) {} };
+
+let tab = 'home', sub = null;  // sub: 'convert' | 'add' | 'details'
+let send, conv = {amt:'', from:'EUR', to:'PLN', msg:''}, addS = {amt:'', cur:'EUR'};
+let showCard = false, detCur = 'EUR';
+function resetSend(){ send = {step:0, amt:'100', from:'EUR', to:'PLN', rcp:null, err:'', res:null}; }
+resetSend();
+
+const total = () => Object.entries(S.bal).reduce((s,[c,v]) => s + v * rate(c,'EUR'), 0);
+const balCodes = () => Object.keys(S.bal).sort();
+const curOpts = (sel, codes = Object.keys(FLAG)) =>
+  codes.map(c => `<option value="${c}" ${c===sel?'selected':''}>${FLAG[c]} ${c}</option>`).join('');
+const langSel = id => `<select class="lang" id="${id}">${Object.entries(LANGS).map(([k,v])=>`<option value="${k}" ${k===lang?'selected':''}>${v}</option>`).join('')}</select>`;
+
+function txTitle(x){
+  if (x.type==='add') return t('added');
+  if (x.type==='conv') return T[lang].convTx(x.fc, x.tc);
+  return x.title;
+}
+function txRow(x){
+  const ic = x.type==='sent' ? ICON.send : x.type==='conv' ? ICON.swap : ICON.plus;
+  const d = new Date(x.t).toLocaleString(LOC[lang],{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
+  const sign = x.type==='add' ? '+ ' : '− ';
+  return `<div class="tx"><div class="ic">${ic}</div>
+    <div class="mid"><div class="t">${esc(txTitle(x))}</div><div class="small muted">${d}</div></div>
+    <div class="r">${sign}${fmt(x.fa,x.fc)}${x.tc!==x.fc?`<div class="small muted">${fmt(x.ta,x.tc)}</div>`:''}</div></div>`;
+}
+
+function feeBlock(q, from, to){
+  return `<div class="fees">
+    <div class="kv"><span>${t('feeL')}</span><span>${fmt(q.fee,from)}</span></div>
+    <div class="kv"><span>${t('convL')}</span><span>${fmt(q.conv,from)}</span></div>
+    <div class="kv"><span>${t('rateL')}</span><span>${q.r.toFixed(4)}</span></div>
+    ${from!==to?`<div class="note">${t('noMarkup')}</div>`:''}
+  </div>`;
+}
+
+// ---------- live support
+// To connect real human agents: create a free account at tawk.to, open
+// Administration → Chat Widget, and paste the part after "embed.tawk.to/" here, e.g. '1a2b3c4d5e/1f6g7h8i9'.
+// Works when the page is hosted on your own site (e.g. GitHub Pages).
+const TAWK_ID = '';
+let tawkReady = false;
+if (TAWK_ID) {
+  window.Tawk_API = window.Tawk_API || {}; window.Tawk_LoadStart = new Date();
+  window.Tawk_API.onLoad = () => { tawkReady = true; try { window.Tawk_API.hideWidget(); } catch(e) {} };
+  const sc = document.createElement('script'); sc.async = true; sc.src = 'https://embed.tawk.to/' + TAWK_ID; sc.charset = 'UTF-8';
+  sc.setAttribute('crossorigin','*'); document.head.appendChild(sc);
+}
+let typing = false;
+if (!S.chat) S.chat = [];
+function botSay(key, who = 'bot', delay = 900){
+  typing = true; render();
+  setTimeout(() => { typing = false; S.chat.push({from:who, key}); save(); if (sub==='support') { render(); scrollChat(); } }, delay);
+}
+function scrollChat(){ window.scrollTo(0, document.body.scrollHeight); }
+function answerFor(text){
+  const x = text.toLocaleLowerCase();
+  const has = (...w) => w.some(k => x.includes(k));
+  if (has('süre','ne zaman','long','how long','ile trwa','kiedy','dauer','wann')) return 'a1';
+  if (has('ücret','fee','opłat','prowizj','gebühr','kosten','kur','rate')) return 'a2';
+  if (has('kart','card','karta','karte','kayb','lost','zgubi','verlor','çalın','stolen')) return 'a3';
+  if (has('temsilci','insan','agent','human','konsultant','mitarbeiter','człowiek','mensch')) return 'q4';
+  return 'fallback';
+}
+function userAsk(textOrKey, isKey){
+  S.chat = S.chat || [];
+  S.chat.push(isKey ? {from:'me', key:textOrKey} : {from:'me', text:textOrKey}); save();
+  const k = isKey ? textOrKey.replace('q','a') : answerFor(textOrKey);
+  if (k === 'a4' || k === 'q4') {
+    if (tawkReady) { S.chat.push({from:'bot', key:'a4'}); save(); render(); try { window.Tawk_API.showWidget(); window.Tawk_API.maximize(); } catch(e) {} return; }
+    botSay('a4'); setTimeout(() => botSay('agentHi','agent',1600), 1100); return;
+  }
+  botSay(k);
+}
+function vSupport(){
+  S.chat = S.chat || [];
+  const msgs = [{from:'bot', key:'greet'}, ...S.chat];
+  return `<div class="back"><button data-close>←</button><div><h1>${t('support')}</h1><div class="online">${t('online')}</div></div></div>
+    <div class="chat" id="chat">
+      ${msgs.map(m => `<div class="msg ${m.from==='me'?'me':'bot'}">${m.from!=='me'?`<div class="who">${m.from==='agent'?t('agent'):t('bot')}</div>`:''}${esc(m.key ? t(m.key) : m.text)}</div>`).join('')}
+      ${typing?`<div class="typing">${t('typing')}</div>`:''}
+    </div>
+    <div class="composer">
+      <div class="chips">${['q1','q2','q3','q4'].map(q=>`<button data-q="${q}">${t(q)}</button>`).join('')}</div>
+      <form class="row" id="cform"><input id="cin" placeholder="${t('typeMsg')}" autocomplete="off"><button type="submit" aria-label="send">${ICON.send}</button></form>
+    </div>`;
+}
+
+// ---------- views
+function vHome(){
+  return `
+    <div class="top"><div class="muted small">${t('total')}</div><div class="row" style="gap:0"><button class="hd" data-sub="support" aria-label="support">${ICON.chat}</button>${langSel('langTop')}</div></div>
+    <div class="total">${fmt(total(),'EUR')}</div>
+    <div class="actions">
+      <button class="act" data-go="send"><span>${ICON.send}</span>${t('send')}</button>
+      <button class="act" data-sub="add"><span>${ICON.plus}</span>${t('add')}</button>
+      <button class="act" data-sub="convert"><span>${ICON.swap}</span>${t('convert')}</button>
+      <button class="act" data-sub="details"><span>${ICON.bank}</span>${t('details').split(' ')[0]}</button>
+    </div>
+    <div class="sec"><h2>${t('balances')}</h2></div>
+    <div class="cards">${balCodes().map(c=>`<div class="card" data-det="${c}" style="cursor:pointer"><div class="flag">${FLAG[c]}</div><div class="amt">${fmt(S.bal[c])}</div><div class="muted small">${c}</div></div>`).join('')}</div>
+    <div class="sec"><h2>${t('recent')}</h2><button class="link" data-go="activity">${t('seeAll')}</button></div>
+    ${S.tx.slice(0,5).map(txRow).join('') || `<p class="muted">${t('noTx')}</p>`}`;
+}
+
+function vCard(){
+  const num = showCard ? '5355 0000 0000 4821' : '•••• •••• •••• 4821';
+  return `<h1>${t('myCard')}</h1>
+    <div class="bcard ${S.frozen?'frozen':''}">
+      <div class="demo">DEMO</div>
+      <div><div class="brand">PayLite</div><div class="small" style="opacity:.8">${t('virtual')}</div></div>
+      <div class="chip"></div>
+      <div class="num">${num}</div>
+      <div class="meta"><div>${t('holder')}<b>ALI ILYASLI</b></div><div>${t('expires')}<b>${showCard?'08/29':'••/••'}</b></div><div>CVV<b>${showCard?'123':'•••'}</b></div></div>
+    </div>
+    <div style="margin-top:12px"><span class="pill">${S.frozen?'❄️ '+t('frozen'):'● '+t('active')}</span></div>
+    <div class="tiles">
+      <button class="tile" id="frz"><span>❄️</span>${S.frozen?t('unfreeze'):t('freeze')}</button>
+      <button class="tile" id="shw"><span>👁</span>${showCard?t('hide'):t('show')}</button>
+    </div>
+    <div class="kv" style="margin-top:18px"><span>${t('limits')}</span><span>${t('limitV')}</span></div>
+    <p class="small muted">${t('cardNote')}</p>`;
+}
+
+function vDetails(){
+  return `<div class="back"><button data-close>←</button><h1>${t('details')}</h1></div>
+    <div class="curtabs">${Object.keys(DETAILS).map(c=>`<button class="${c===detCur?'on':''}" data-dc="${c}">${FLAG[c]} ${c}</button>`).join('')}</div>
+    <div class="box">
+      <div class="kv"><span>${t('holder')}</span><span>Ali Ilyasli</span></div>
+      ${DETAILS[detCur].map(([k,v])=>`<div class="kv"><span>${k}</span><span>${v}<button class="copy" data-copy="${v}">${t('copy')}</button></span></div>`).join('')}
+    </div>
+    <p class="small muted">${t('detailsNote')}</p>`;
+}
+
+function vSend(){
+  const s = send, a = parse(s.amt), q = quote(a, s.from, s.to), bal = S.bal[s.from] || 0;
+  if (s.step === 0) return `
+    <h1>${t('sendMoney')}</h1>
+    <div class="box"><label>${t('youSend')}</label>
+      <div class="row"><input class="amtin" id="amt" inputmode="decimal" value="${esc(s.amt)}" placeholder="0">
+      <select class="cur" id="from">${curOpts(s.from, balCodes())}</select></div></div>
+    <div class="small ${a>bal?'err':'muted'}" style="margin:6px 4px">${t('balance')}: ${fmt(bal,s.from)}</div>
+    <div id="live">${feeBlock(q,s.from,s.to)}
+    <div class="box"><label>${t('recipientGets')}</label>
+      <div class="row"><div class="amtout" id="get">${fmt(q.get)}</div>
+      <select class="cur" id="to">${curOpts(s.to)}</select></div></div></div>
+    <button class="btn" id="next" ${a>0&&a<=bal?'':'disabled'}>${t('cont')}</button>`;
+
+  if (s.step === 1){
+    const list = S.rcp.map((r,i)=>({...r,i})).filter(r=>r.cur===s.to);
+    return `
+      <div class="back"><button data-step="0">←</button><h1>${t('whoTo')}</h1></div>
+      ${list.length ? list.map(r=>`<button class="rcp" data-rcp="${r.i}"><div class="ic">${esc(r.name[0])}</div>
+        <div><div style="font-weight:600">${esc(r.name)}</div><div class="small muted">${FLAG[r.cur]} ${esc(r.acc)}</div></div></button>`).join('')
+        : `<p class="muted">${T[lang].noRcp(s.to)}</p>`}
+      <h2 style="font-size:16px;margin:24px 0 2px">${T[lang].newRcp(s.to)}</h2>
+      <input class="txt" id="rn" placeholder="${t('fullName')}" autocomplete="off">
+      <input class="txt" id="ra" placeholder="${t('iban')}" autocomplete="off">
+      <button class="btn" id="addr" disabled>${t('addCont')}</button>`;
+  }
+
+  if (s.step === 2){
+    const r = S.rcp[s.rcp];
+    return `
+      <div class="back"><button data-step="1">←</button><h1>${t('review')}</h1></div>
+      <div class="kv b"><span>${t('sentAmt')}</span><span>${fmt(a,s.from)}</span></div>
+      <div class="kv"><span>${t('fee')}</span><span>${fmt(q.fee,s.from)}</span></div>
+      <div class="kv"><span>${t('convd')}</span><span>${fmt(q.conv,s.from)}</span></div>
+      <div class="kv"><span>${t('rate')}</span><span>1 ${s.from} = ${q.r.toFixed(4)} ${s.to}</span></div>
+      <div class="kv b"><span>${esc(T[lang].gets(r.name))}</span><span>${fmt(q.get,s.to)}</span></div>
+      <div class="kv"><span>${t('acc')}</span><span>${esc(r.acc)}</span></div>
+      <div class="kv"><span>${t('arrives')}</span><span>${t('arrivesV')}</span></div>
+      ${s.err?`<div class="err">${s.err}</div>`:''}
+      <button class="btn" id="confirm">${t('confirm')}</button>`;
+  }
+
+  return `<div class="done"><div class="check">${ICON.check}</div>
+    <h1>${t('sentOk')}</h1>
+    <p class="muted">${esc(T[lang].willGet(S.rcp[s.rcp].name, fmt(s.res.get,s.to)))}</p>
+    <button class="btn" id="fin">${t('done')}</button></div>`;
+}
+
+function vConvert(){
+  const a = parse(conv.amt), q = quote(a, conv.from, conv.to);
+  return `
+    <div class="back"><button data-close>←</button><h1>${t('convTitle')}</h1></div>
+    <div class="box"><label>${t('source')}</label>
+      <div class="row"><input class="amtin" id="camt" inputmode="decimal" value="${esc(conv.amt)}" placeholder="0">
+      <select class="cur" id="cfrom">${curOpts(conv.from, balCodes())}</select></div></div>
+    <div class="small muted" style="margin:6px 4px">${t('balance')}: ${fmt(S.bal[conv.from]||0,conv.from)}</div>
+    <div id="clive">${feeBlock(q,conv.from,conv.to)}
+    <div class="box"><label>${t('target')}</label>
+      <div class="row"><div class="amtout">${fmt(q.get)}</div>
+      <select class="cur" id="cto">${curOpts(conv.to)}</select></div></div></div>
+    ${conv.msg?`<div class="${conv.msg.startsWith('✅')?'ok':'err'}">${conv.msg}</div>`:''}
+    <button class="btn" id="doconv">${t('convert')}</button>`;
+}
+
+function vAdd(){
+  return `
+    <div class="back"><button data-close>←</button><h1>${t('addTitle')}</h1></div>
+    <div class="box"><label>${t('amount')}</label>
+      <div class="row"><input class="amtin" id="aamt" inputmode="decimal" value="${esc(addS.amt)}" placeholder="0">
+      <select class="cur" id="acur">${curOpts(addS.cur)}</select></div></div>
+    <p class="small muted">${t('addNote')}</p>
+    <button class="btn" id="doadd">${t('addTitle')}</button>`;
+}
+
+function vActivity(){
+  return `<h1>${t('activity')}</h1>${S.tx.map(txRow).join('') || `<p class="muted">${t('noTx')}</p>`}`;
+}
+
+function vAccount(){
+  return `<div class="avatar">AI</div>
+    <div style="text-align:center"><div style="font-size:20px;font-weight:800">Ali Ilyasli</div>
+    <div class="muted small">${t('verified')}</div></div>
+    <div class="menu" style="margin-top:24px">
+      <div class="kv"><span>${t('language')}</span><span>${langSel('langAcc')}</span></div>
+      <div class="kv" data-sub="details" style="cursor:pointer"><span>${t('details')}</span><span class="muted">›</span></div>
+      <div class="kv" data-sub="support" style="cursor:pointer"><span>💬 ${t('support')}</span><span class="muted">›</span></div>
+      ${['personal','security','linked','notif'].map(x=>`<div class="kv"><span>${t(x)}</span><span class="muted">›</span></div>`).join('')}
+    </div>
+    <button class="btn ghost" id="reset">${t('reset')}</button>`;
+}
+
+// ---------- render & events
+const TABS = [['home',ICON.home],['card',ICON.card],['send',ICON.send],['activity',ICON.list],['account',ICON.user]];
+
+function render(){
+  document.documentElement.lang = lang;
+  const v = document.getElementById('view');
+  v.innerHTML = sub==='convert' ? vConvert() : sub==='add' ? vAdd() : sub==='details' ? vDetails() : sub==='support' ? vSupport()
+    : tab==='home' ? vHome() : tab==='card' ? vCard() : tab==='send' ? vSend() : tab==='activity' ? vActivity() : vAccount();
+  const nav = document.getElementById('nav');
+  nav.style.display = sub ? 'none' : 'flex';
+  nav.innerHTML = TABS.map(([k,i])=>`<button class="${tab===k?'on':''}" data-go="${k}"><i>${i}</i>${t(k)}</button>`).join('');
+  bind();
+}
+
+function go(x){ tab = x; sub = null; if (x==='send' && send.step===3) resetSend(); render(); window.scrollTo(0,0); }
+const $ = id => document.getElementById(id);
+
+function bind(){
+  document.querySelectorAll('[data-go]').forEach(b => b.onclick = () => go(b.dataset.go));
+  document.querySelectorAll('[data-sub]').forEach(b => b.onclick = () => { sub = b.dataset.sub; conv.msg=''; render(); if (sub!=='support') window.scrollTo(0,0); else scrollChat(); });
+  document.querySelectorAll('[data-close]').forEach(b => b.onclick = () => { sub = null; render(); });
+  document.querySelectorAll('[data-step]').forEach(b => b.onclick = () => { send.step = +b.dataset.step; send.err=''; render(); });
+  document.querySelectorAll('[data-det]').forEach(b => b.onclick = () => { detCur = b.dataset.det; sub = 'details'; render(); });
+  document.querySelectorAll('[data-dc]').forEach(b => b.onclick = () => { detCur = b.dataset.dc; render(); });
+  document.querySelectorAll('[data-copy]').forEach(b => b.onclick = async () => {
+    try { await navigator.clipboard.writeText(b.dataset.copy); b.textContent = t('copied'); } catch(e) { b.textContent = '—'; }
+  });
+  ['langTop','langAcc'].forEach(id => { if ($(id)) $(id).onchange = e => {
+    lang = e.target.value; try { localStorage.setItem('paylite-lang2', lang); } catch(err) {} render();
+  }; });
+
+  if ($('frz')) $('frz').onclick = () => { S.frozen = !S.frozen; save(); render(); };
+  if ($('shw')) $('shw').onclick = () => { showCard = !showCard; render(); };
+
+  // send step 0 — live update without losing focus
+  if ($('amt')) {
+    const upd = () => {
+      const a = parse(send.amt), q = quote(a, send.from, send.to), bal = S.bal[send.from]||0;
+      $('get').textContent = fmt(q.get);
+      $('live').querySelector('.fees').outerHTML = feeBlock(q, send.from, send.to);
+      $('next').disabled = !(a>0 && a<=bal);
+      $('amt').closest('.box').nextElementSibling.className = 'small ' + (a>bal?'err':'muted');
+    };
+    $('amt').oninput = e => { send.amt = e.target.value.replace(/[^0-9.,]/g,''); e.target.value = send.amt; upd(); };
+    $('from').onchange = e => { send.from = e.target.value; render(); };
+    $('to').onchange = e => { send.to = e.target.value; upd(); };
+    $('next').onclick = () => { send.step = 1; render(); };
+  }
+  document.querySelectorAll('[data-rcp]').forEach(b => b.onclick = () => { send.rcp = +b.dataset.rcp; send.step = 2; render(); });
+  if ($('addr')) {
+    const chk = () => $('addr').disabled = !($('rn').value.trim() && $('ra').value.trim().length >= 6);
+    $('rn').oninput = chk; $('ra').oninput = chk;
+    $('addr').onclick = () => {
+      S.rcp.push({name:$('rn').value.trim(), cur:send.to, acc:$('ra').value.trim()});
+      save(); send.rcp = S.rcp.length-1; send.step = 2; render();
+    };
+  }
+  if ($('confirm')) $('confirm').onclick = () => {
+    const a = parse(send.amt), bal = S.bal[send.from]||0, r = S.rcp[send.rcp];
+    if (a <= 0) { send.err=t('enterAmt'); return render(); }
+    if (a > bal) { send.err=t('insuf'); return render(); }
+    const q = quote(a, send.from, r.cur);
+    S.bal[send.from] = bal - a;
+    S.tx.unshift({type:'sent', title:r.name, fa:a, fc:send.from, ta:q.get, tc:r.cur, fee:q.fee, t:Date.now()});
+    save(); send.res = q; send.step = 3; render();
+  };
+  if ($('fin')) $('fin').onclick = () => { resetSend(); go('home'); };
+
+  if ($('camt')) {
+    $('camt').oninput = e => {
+      conv.amt = e.target.value.replace(/[^0-9.,]/g,''); e.target.value = conv.amt; conv.msg='';
+      const q = quote(parse(conv.amt), conv.from, conv.to);
+      $('clive').querySelector('.fees').outerHTML = feeBlock(q, conv.from, conv.to);
+      $('clive').querySelector('.amtout').textContent = fmt(q.get);
+    };
+    $('cfrom').onchange = e => { conv.from = e.target.value; conv.msg=''; render(); };
+    $('cto').onchange = e => { conv.to = e.target.value; conv.msg=''; render(); };
+    $('doconv').onclick = () => {
+      const a = parse(conv.amt), bal = S.bal[conv.from]||0;
+      if (a<=0) conv.msg = '⚠️ ' + t('enterAmt');
+      else if (a>bal) conv.msg = '⚠️ ' + t('insuf');
+      else if (conv.from===conv.to) conv.msg = '⚠️ ' + t('pickDiff');
+      else {
+        const q = quote(a, conv.from, conv.to);
+        S.bal[conv.from] = bal - a;
+        S.bal[conv.to] = (S.bal[conv.to]||0) + q.get;
+        S.tx.unshift({type:'conv', fa:a, fc:conv.from, ta:q.get, tc:conv.to, fee:q.fee, t:Date.now()});
+        save(); conv.msg = '✅ ' + T[lang].convOk(conv.to, fmt(S.bal[conv.to],conv.to)); conv.amt='';
+      }
+      render();
+    };
+  }
+
+  if ($('aamt')) {
+    $('aamt').oninput = e => { addS.amt = e.target.value.replace(/[^0-9.,]/g,''); e.target.value = addS.amt; };
+    $('acur').onchange = e => { addS.cur = e.target.value; };
+    $('doadd').onclick = () => {
+      const a = parse(addS.amt); if (a<=0) return;
+      S.bal[addS.cur] = (S.bal[addS.cur]||0) + a;
+      S.tx.unshift({type:'add', fa:a, fc:addS.cur, ta:a, tc:addS.cur, fee:0, t:Date.now()});
+      save(); addS.amt=''; sub=null; render();
+    };
+  }
+
+  document.querySelectorAll('[data-q]').forEach(b => b.onclick = () => userAsk(b.dataset.q, true));
+  if ($('cform')) {
+    $('cform').onsubmit = e => { e.preventDefault(); const v = $('cin').value.trim(); if (!v) return; userAsk(v, false); };
+    scrollChat();
+  }
+  if ($('reset')) $('reset').onclick = () => { S = JSON.parse(JSON.stringify(DEFAULT)); save(); resetSend(); go('home'); };
+}
+
+render();
+</script>
+</body>
+</html>
